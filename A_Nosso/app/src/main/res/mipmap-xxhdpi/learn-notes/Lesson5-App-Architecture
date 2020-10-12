@@ -1,0 +1,144 @@
+3.Exercise: Tour of the App
+---------------------------
+- Separate the 'Fragments' in each package by screens
+
+---------------------------------------
+6.Our App Architecture: Software design principle
+------------------------------------------------
+Views (.xml 'layout')
+UI Controller (Activity/Fragment)
+
+
+- Classes: UI Controller - ViewModel - LiveData
+-- UI Controller: Activity/Fragment -> Responsible for any
+UI related tasks, and passes info to 'ViewModel'.
+Only contain the code needed to display the proper values 
+on screen and the code which captures user's events	
+ex: Display views and capture user input 
+
+--- ViewModel: Does the decision-making; holds the data needed 
+to display the Fragment/Activity associated with. 
+Also does simple calculation/transformation on the data so 
+that it will be ready to be displayed by the UI controller.
+Never references fragments, activities, views.
+Abstract class that is 'extended' and implemented.
+Hold the app's UI data; have the 'Fragment' reference
+the 'ViewModel'.
+It will contain instances of a third class 'LiveData'.
+
+---- LiveData: Crucial for communicating info for the 
+'ViewModel' to the 'UI Controller' 
+
+---------------------------------------
+10.Exercise: Populate the GameViewModel
+---------------------------------------
+Any navigation needs to be done in the
+'UI Controller' b/c it references 'Fragment'
+
+-----------
+13.LiveData
+-----------
+- Communicate from the 'ViewModel' back to the
+UI Controller without having 'ViewModel' store 
+references to any Views, Acitivities, Fragments 
+- 'LiveData': Change the data in the 'ViewModel' and then 
+have the screen magically know when to update itself
+-- LiveData is UI data, so its kept in the 'ViewModel'
+
+// Have 'GameFragment onCreate' get a 
+reference to LiveData to score and call observe
+ex: val score = MutableLiveData<Int>()
+
+- viewModel.score.observe(this, Observer {
+	newScore -> updateScoreText(newScore)
+
+}) 
+- this = GameFragment
+-- Setting up the 'Observer' relationship, can 
+have the 'ViewModel' communicate data changes
+back to the UI Controller 
+
+fun onSkip() {
+	score.value = (score.value)?.minus(1)
+	nextWord()
+}
+
+- Setting up the 'Observer' relationship
+[GameFragment.kt]
+	fun onCreateView() {
+		viewModel.score.observe(this, Observer { newScore -> 
+		binding.scoreText.text = newScore.toString()
+		})
+    }
+
+
+-----------------------------------------------------
+16.Exercise: Add LiveData Encapsulation to GameViewModel
+----------------------------------------------------
+
+------------------ 
+17.Event vs. State
+------------------ 
+- 'LiveData' is the only mechanism that allows to 
+communicate from the 'ViewModel' back to the 'Fragment'
+-- Keeps track of 'State'
+'State' ex: This button is red, the score is 20,
+
+- 'Event' ex: Navigating into another screen.
+An 'Event' happens once, then its done until triggered.
+
+
+------------------------------- 
+18.Exercise: Add End Game Event
+-------------------------------
+- Can use 'LiveData' to represent a 'GameFinished Event'
+ex: private val _eventGameFinish = MutableLiveData<Boolean>()
+val eventGameFinish: LiveData<Boolean>
+get() = _eventGameFinish
+
+
+------------------------------------------ 
+23.Exercise: Add ViewModel to Data Binding
+<<WATCH AGAIN>>
+------------------------------------------
+- Data Binding: Way to get 'Views' by inflating
+the layout 
+
+@{} in a .xml file == data binding expression 
+- can call a method 
+
+--------------------------------------
+24.Exercise: Add LiveData Data Binding
+<<WATCH AGAIN>>
+--------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

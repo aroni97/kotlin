@@ -1,0 +1,27 @@
+3.EXERCISE: Introduction to the Activity Lifecycle Diagram
+----------------------------------------------------------
+Activity Lifecycle States (Status of the Activity)
+- Created
+- Started 
+- Resumed 
+- Destroyed 
+- Initialized  
+
+Activity Lifecycle Callbacks Methods
+* Called when the 'Activity' moves from one state
+to another 
+** Can perform an action when the 'Activity' enters 
+a certain lifecycle state by overriding the callbacks methods 
+
+- onCreate: Called when the 'Activity' is created but not visible;
+one time initializations, layout inflations 
+- onStart: Called when the 'Activity' becomes visible 
+- onResume: Focus/ Called when the 'Activity' gains focus
+- onPause: Focus/ Called when the 'Activity' loses focus
+- onStop: Called when the 'Activity' off screen
+- onDestroy: 
+- onRestart
+* Focus: When you can interact with the 'Activity'
+
+
+

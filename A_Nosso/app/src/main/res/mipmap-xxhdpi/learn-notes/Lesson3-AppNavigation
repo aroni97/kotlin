@@ -1,0 +1,198 @@
+4.FRAGRMENTS
+------------
+- 'Activity' contains 'Fragments'[View]
+ex: override fun onCreate(savedInstanceState: Bundle?) {
+	super.onCreate(savedInstanceState) 
+	val binding = DataBindingUtil.setContentView<ActivityMainBinding> (this, R.layout.activity_main) 
+}
+- Tell which layout to use by calling 'setContentView' in 'onCreate'
+-- 'Activity' inflates the layout and places it correctly within the activity's layout hierarchy
+
+
+ex: class AboutFragment : Fragment() {
+	override fun onCreateView(...): View? {
+		return inflater.inflate(R.layout.fragment_about)
+	}
+}
+- Fragments: Manually inflate and return the inflated 'layout' with 'onCreateView' method. 
+
+- Activity's inherit from the 'Context' class, use extends 'ContextCompat' property within a 'Fragment' to have access to app data associated with the context
+ex: context!!.getString(R.string.app_name)
+
+
+6.EXERCISE: PROJECT TOUR
+-------------------------
+- Series of 'Fragment' classes in .kt are the different destinations to navigate in
+-- MainActivity: A host for all the 'Fragments'
+--- Each 'Fragment' .kt Classes have an individual layout
+
+
+7.EXERCISE: Creating and Adding a Fragment
+-----------------------------------------
+- By creating a 'Fragment' .kt, have to return a 'layout' at function 'onCreateView'
+--- use 'layout': 'fragment_title.xml'[naming convection] 
+
+- In the 'Activity' {MainActivity}, we use 'DataBindingUtil.setContentView' to get the 'binding' class from a layout
+
+
+!!!SUPER IMPORTANT
+-- In 'Fragment', '.setContentView' doesnt exist
+--- Therefore, call => val binding: 
+	FragmentTitleBinding = 'DataBindingUtil.inflate(
+		inflater, R.layout.fragment_title, container, 
+	    false)
+	    	return binding.root
+- Container: the provided view group it will be hosted by 
+-- False: From being attached to the 'View Group'
+--- 'binding.root': Contains the root of the 'layout' just inflated
+
+!!!SUPER IMPORTANT
+- Now, the 'Fragment' is inflating the right 'layout' but its not contained by the 'Activity' (its not visible)
+-- Add the 'Fragment' into the [activity_main.xml] in between 
+<LinearLayout>
+ex: <fragment
+		android:id="@+id/titleFragment"
+		android:name="fullPath.ktClass|com.example."
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+/>
+
+9.EXERCISE: Let's Navigate Already
+----------------------------------
+*1st: Adding the Navigation Graph Resource
+- Navigation Library Gradle Dependency
+-- Start by creating a 'Navigation Graph' resource
+ex: res->new->Android Resource File->Resource Type->Navigation
+
+- Must give 'Navigation' control over which 'Fragment' to 
+display in the 'Activity' 
+-- 'Nav Host Fragment': 'Navigation' provides its own 'Fragment' 
+--- Acts as a host for each of the 'Fragment' in the
+'Activity' Navigation Graph. 
+
+- As the user moves between destinations within 
+the 'Navigation Graph' for the 'Activity',
+the 'Nav Host Fragment' swaps the 'Fragments'
+in/out as necessary AND automatically creates
+and manages appropriate 'Fragment Back Stack'
+
+*2nd:Adding the NavHostFragment 
+- Add the 'Nav Host Fragment' to the [ativity_main.xml]
+ex:<LinearLayout>
+  <fragment
+  	android:id="@+id/myNavHostFragment"
+	android:name="androidx.navigation.fragment.NavHostFragment"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	// it needs to know which 'Navigation Graph Resource' to use 
+	app:navGraph="@navigation/navigation"
+	app:defaultNavHost="true"
+	// Means, this navigation host will intercept the 
+	system back key, have to set this explicitly
+	b/c you can have multiple simultaneous navigation
+	host AND you want only one navigation host handle back
+/>
+
+*3rd: Add Fragments to the Nav Graph
+REWATCH
+
+*4th: Connecting Fragments in the Graph with Actions
+- Connect the two Fragment destinations with an action
+
+*5th: Create onClickListener
+- Create 'onClickListener': To get the button/action to do something
+[TitleFragment.kt]
+	fun onCreateView {
+		binding.playButton.setOnClickListener {
+		view: View -> 
+		}
+	}
+ 
+- 'Navigation Controller': Use to manage navigation
+within the 'Nav Host Fragment'; navigate between the destinations/Fragment
+-- The 'Nav Host Fragment' is the parent in the 'View' 
+hierarchy of the 'Fragment' 
+
+
+*6th: Find Navigation Controller
+ex: [TitleFragment.kt]
+	fun onCreateView {
+		binding.playButton.setOnClickListener {
+		view: View -> 
+			Navigation.findNavController(view)
+		}
+	}
+
+*7th: Navigate with our Action
+- With a 'Navigation Controller', use it to navigate 
+to other 'Fragment' with the ID of the 'Fragment' to 
+other 'Fragment'
+ex: [TitleFragment.kt]
+	fun onCreateView {
+		binding.playButton.setOnClickListener {
+		view: View -> 
+Navigation.findNavController(view).navigate
+(R.id.action_titleFragment_to_gameFragment) 
+		}
+		return binding.root
+	}
+
+- Navigation can create the '.onClickListener' for
+us => BEST WAY 
+ex: 
+binding.playButton.setOnClickListener (
+Navigation.createNavigateOnClickListener(
+	R.id.action_titleFragment_to_gameFragment)
+)
+
+
+11. Conditional Navigation SC
+-----------------------------
+- Navigate to != 'Fragment' based on conditions
+ex: 'GameWonFragment' and 'GameOverFragment'
+
+*1st
+- Add the destinations into [navigation.xml]
+
+12.Exercise: Back Stack Manipulation
+------------------------------------
+- GameOver Fragment => 'Pop To': gameFragment; inclusive: True
+-- Destination: Goes beyond 'gameFragment' b/c of 'inclusive'
+? Come back ? 
+
+
+
+14.Exercise: Adding Support for the Up Button
+---------------------------------------------
+- 'Navigation Controller' has an UI library called
+'Navigation UI', it integrates with the action bar 
+to implement the correct behavior for the up button 
+
+- To hook up the action bar to the navigation 
+'Navigation UI', 'Navigation UI' needs access to the 
+navigation controller 
+ex: val navController = this.findNavController(
+	R.id.myNavHostFragment)
+	NavigationUI.setupActionBarWithNavController(this, navController) 
+	//Hook up the navigation UI to the action bar 
+
+- onSupportNavigateUp() -> where we make navigation handle 
+what happens when 'up' is pressed 
+override fun onSupportNavigateUp(): Boolean {
+	val navController = this.findNavController(R.id.myNavHostFragment)
+	return navController.navigateup()
+}
+
+17.Exercise: Adding a Menu
+-------------------------
+- Should rewatch
+
+
+
+
+23.Exercise: Adding Sharing with an intent
+------------------------------------------
+
+
+
+

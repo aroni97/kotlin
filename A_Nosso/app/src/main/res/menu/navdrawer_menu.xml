@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/pinicialFragment"
+        android:title="Home"
+        android:actionLayout="@layout/fragment_pinicial"
+        />
+    <item
+        android:id="@+id/frutasFragment"
+        android:title="Frutas"
+        android:actionLayout="@layout/fragment_frutas"
+        />
+    <item
+        android:id="@+id/carnesFragment"
+        android:title="Carnes" />
+<!--        android:actionLayout="@layout/fragment_carnes"-->
+
+    <item
+        android:id="@+id/bebidasFragment"
+        android:title="Bebidas" />
+
+    <item
+        android:id="@+id/docariaFragment"
+        android:title="Doçaria" />
+
+    <item
+        android:id="@+id/loginFragment"
+        android:title="Sair"
+        android:actionLayout="@layout/fragment_login"
+        />
+</menu>

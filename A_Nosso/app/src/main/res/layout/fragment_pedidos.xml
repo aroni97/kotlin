@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".PedidosFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/pedidosLayout"
+        >
+
+        <TextView
+            android:id="@+id/text_titulo_pedidos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Meus Pedidos"
+            android:textColor="#000"
+            android:textSize="40sp"
+            app:layout_constraintTop_toBottomOf="@+id/imagem_login"
+            />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:id="@+id/img_pedido_uva"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/uva"
+            />
+
+        <TextView
+            android:id="@+id/text_pedido_uva"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Uva"
+            android:textColor="#000"
+            android:textSize="20sp"
+            />
+
+        <TextView
+            android:id="@+id/text_uva_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="R$ 2 por Kilo"
+            android:textColor="#000"
+            android:textSize="20sp"
+            />
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:id="@+id/img_pedido_maca"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/maca"
+                />
+
+            <TextView
+                android:id="@+id/text_pedido_maca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Maça"
+                android:textColor="#000"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:id="@+id/text_maca_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="R$ 3 por Kilo"
+                android:textColor="#000"
+                android:textSize="20sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:id="@+id/img_pedido_pera"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/pera"
+                />
+
+            <TextView
+                android:id="@+id/text_pedido_pera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Pera"
+                android:textColor="#000"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:id="@+id/text_pera_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="R$ 4 por Kilo"
+                android:textColor="#000"
+                android:textSize="20sp"
+                />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btFinalizar"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_margin="40dp"
+            android:layout_gravity="center_horizontal"
+            android:text="FINALIZAR"
+            android:textSize="20sp"
+            android:textColor="#FFFF"
+            android:background="@drawable/borda_rendonda"
+            />
+
+
+
+
+    </LinearLayout>
+</layout>

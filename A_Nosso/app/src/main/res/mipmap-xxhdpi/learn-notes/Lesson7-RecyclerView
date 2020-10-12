@@ -1,0 +1,51 @@
+3.Your First RecyclerView
+--------------------------
+- Adapter pattern helps an object to work together nicely with another API 
+- To not change the way the app stores/processes data to
+put it onto the screen, we build an adaptor which adapts our data into something that can be used by RecyclerView
+
+- Adapter Interface
+-- RecyclerView adapters must provide a few methods for 
+RecyclerView to understand how to display the data on screen
+ex: 
+- To know how far to scroll, the adapter needs to tell the 
+recycler view how many items are available 
+-- Then, provide a way for the RecyclerView to draw a specific item; used anytime an item enters the screen  
+--- Must provide RecyclerView with a way to create a new view for an item 
+
+- RecyclerView: Responsible for handling the recycling and
+display of the views 
+
+- RecyclerView interacts with 'ViewHolder'
+-- RecyclerView uses to efficiently move views around the screen
+--- ViewHolders knows the last position the items have in
+the list
+
+
+------------------------------
+4.Exercise: Add a RecyclerView
+------------------------------
+- Insert <androidx.recyclerview.widget.RecyclerView>
+-- Display a list inside 'RecyclerView' instead of
+<ScrollView> 
+
+- app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/> 
+-- Tells how to position the elements of the list, it
+lays out the items in a list of full-width roles. 
+
+Create
+// Need to tell 'RecyclerView' what kind of view holders
+// it will be working with. 
+- class SleepNightAdapter: RecyclerView.
+
+
+
+
+
+
+
+
+
+
+
+

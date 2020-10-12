@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".LoginFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/loginLayout"
+        >
+
+        <ImageView
+            android:id="@+id/imagem_login"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/logo_simples"
+            />
+
+        <TextView
+            android:id="@+id/text_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Login"
+            android:textSize="45sp"
+            android:textColor="#000"
+            app:layout_constraintTop_toBottomOf="@+id/imagem_login"
+            />
+
+        <EditText
+            android:id="@+id/edit_email"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textEmailAddress"
+            android:hint="Endereço do Email"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/text_login"
+        />
+
+        <EditText
+            android:id="@+id/edit_senha"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textPassword"
+            android:hint="Senha"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/edit_email"
+            />
+
+        <Button
+            android:id="@+id/btEntrar"
+            android:layout_width="170dp"
+            android:layout_height="40dp"
+            android:layout_margin="40dp"
+            android:layout_gravity="center_horizontal"
+            android:text="ENTRAR"
+            android:textSize="20sp"
+            android:textColor="#FFFF"
+            android:background="@drawable/borda_rendonda"
+            app:layout_constraintTop_toBottomOf="@+id/edit_senha"
+            />
+
+
+
+    </LinearLayout>
+</layout>

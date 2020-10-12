@@ -1,0 +1,143 @@
+11. ACTIVITY AND LAYOUT
+-----------------------
+- 'Activity': Android class, responsible for drawing an 
+app UI and receive input events
+ex: MainActivity.kt
+
+-- 'Activity' have an associated 'layout' file
+ex: activity_main.xml 
+--- 'Layout' files: Express what the app looks like (txt/img/btn )  
+
+!! 'Layout Inflation': Connects the 'Activity' and the 'Layout' 
+-- Triggered when the 'Activity' starts
+--- The 'Views' defined in 'Layout' files are turned/inflated into 'Kotlin View Objects'
+ex:
+
+[activity_main.xml]
+   <ImageView
+    layout_gravity="center_horizontal"/>
+   <Button>
+----------INFLATES----------   
+[MainActivity.kt]
+
+var diceImage: ImageView
+var rollButton: Button
+
+
+12. Exercise: Hello Android
+---------------------------
+- 'setContentView': Specifies which layout is associated with
+the 'Activity' AND inflates it [it sets up the layout]
+
+- The 'View' are defined by the tags
+-- The 'Properties' of the 'View' are defined by the attributes inside the tags
+
+
+13. Adding the Button 
+---------------------
+<LinearLayout> == View Group
+- Positions the 'Views' one after the other
+-- android:orientation="vertical"
+--- Stacks the 'views' vertically; or in a row
+-- Move the <LinearLayout> to the center of the screen
+--- android:layout_gravity="center_vertical"
+
+- The parent of <LinearLayout> is the 'Root View'(Size of the entire screen)
+
+- Center horizontally the 'Views' by inserting on each 'View'  
+-- android:layout_gravity="center_horizontal"
+
+
+17. Exercise: OnClickListener
+-----------------------------
+- Toast.makeText
+-- 'Context' class // message to be shown // duration of exibition
+--- Ex: rollButton.setOnClickListener {
+	Toast.makeText(this, "button clicked", Toast.LENGTH_SHORT).show()
+}
+
+
+18. Exercise: Change the Text
+-----------------------------
+private fun rollDice() {
+	val resultText: TextView = findViewById(R.id.result_text)
+	val randomInt = Random().nextInt(6) + 1
+	resultText.text = randomInt.toString()
+}
+
+
+20.Exercise: Adding the image resource <USELESS>
+--------------------------------------
+- Insert downloaded images
+-- Change view to 'Project'->app->src->main->res->drawable->drag the images into the drawable folder 
+
+
+23.Exercise: Finding Views Efficiently <<MUITO BOM>>
+--------------------------------------
+[MainActivity.kt]
+- Minimize the number of calls to findViewById 
+-- Store the 'diceImage' View in a 'Field'
+--- Keeping the 'View' in a 'Field' allows to reference the 'View' directly at any time 	
+
+- The 'Views' of the 'Layout' arent acessible until 'inflated' by 'setContentView'
+-- 'Lateinit': Initialize non-null variables in 'onCreate' function
+--- Promises that the variable wont be left as 'null' 
+ex:
+	lateinit var diceImage: ImageView 
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_main)
+		val rollButton: Button = findViewById(R.id.roll_button)
+			diceImage = findViewById(R.id.dice_image)
+	}
+
+	private fun rollDice() {
+		diceImage.setImageResource(drawableResource)
+ 	}
+
+
+24.Namespaces
+-------------
+- 'Tools': To not show an image when the app first opens
+-- Used when want to find dummy content only used when previewing the app of: tools:src=""
+
+
+25.Intro to Gradle <USELESS> <USELESS>
+------------------
+- Gradle: Android Build Tool choice for android, it controls to describe: 
+-- what devices the app is built to run on 
+-- Compiling code/resources into executable code 
+-- Declaring/managing Dependencies (dependent code and libraries)
+-- Signing apps so users can download them from GPlay 
+-- Run automated Tests 
+
+- Click run button: A series of Gradle commands compiles the source code through dependencies and any associated resources into an android application package (APK)
+- Android Application Package: File format used to distribute and install android applications 
+- After its built by Gradle, android studio transfers the 'APK' to the physical device, installs the 'APK' and runs it. 
+- Types of 'Gradle' files: 
+-- Project wide build settings
+-- Specific 'Gradle' file for each module of the project
+-- Module: Collection of source files and build settings for a discrete piece of functionality in the app 
+
+
+26.Build.gradle
+---------------
+- Repository: Remote server where external code is downloaded from (ex: Android libraries)
+- Dependencies: External code, like libraries, that a project depends on 
+
+
+28.Exercise: Vector Drawables <USELESS>
+-----------------------------
+- Androidx compatibility library for vector drawables 
+(1) Add androidx vector support to 'build.gradle' file (2) add a new namespace to the layout (3) change the images from src to 'srcCompat'
+- 'App' namespace: Namespace for attributes that comes either from the custom code or libraries, Not from the android framework 
+<LinearLayout
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+<ImageView
+	app:srcCompat
+			/>
+	
+
+
+

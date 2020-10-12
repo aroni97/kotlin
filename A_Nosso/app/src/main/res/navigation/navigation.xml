@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/pinicialFragment">
+
+
+    <fragment
+        android:id="@+id/pinicialFragment"
+        android:name="com.example.welink.PinicialFragment"
+        android:label="fragment_pinicial"
+        tools:layout="@layout/fragment_pinicial" >
+
+        <action
+            android:id="@+id/action_pinicialFragment_to_frutasFragment"
+            app:destination="@id/frutasFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cadastroFragment"
+        android:name="com.example.welink.CadastroFragment"
+        android:label="fragment_cadastro"
+        tools:layout="@layout/fragment_cadastro"
+        >
+        <action
+            android:id="@+id/action_cadastroFragment_to_pinicialFragment"
+            app:destination="@id/pinicialFragment" />
+        <action
+            android:id="@+id/action_cadastroFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/finalFragment"
+        android:name="com.example.welink.FinalFragment"
+        android:label="fragment_final"
+        tools:layout="@layout/fragment_final" />
+    <fragment
+        android:id="@+id/frutasFragment"
+        android:name="com.example.welink.FrutasFragment"
+        android:label="fragment_frutas"
+        tools:layout="@layout/fragment_frutas" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.welink.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_pedidosFragment"
+            app:destination="@id/pedidosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pedidosFragment"
+        android:name="com.example.welink.PedidosFragment"
+        android:label="fragment_pedidos"
+        tools:layout="@layout/fragment_pedidos" >
+        <action
+            android:id="@+id/action_pedidosFragment_to_finalFragment"
+            app:destination="@id/finalFragment" />
+    </fragment>
+
+
+</navigation>

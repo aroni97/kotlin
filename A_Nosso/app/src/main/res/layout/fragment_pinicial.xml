@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".PinicialFragment">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/pinicialLayout"
+        >
+
+        <TextView
+            android:id="@+id/text_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/pInicial"
+            android:textSize="110sp"
+            />
+
+        <Button
+            android:id="@+id/btProdutos"
+            android:layout_width="135dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="50dp"
+            android:text="PRODUTOS"
+            android:textSize="16sp"
+            android:textColor="#FFFF"
+            android:background="@drawable/borda_rendonda"
+            />
+    </LinearLayout>
+</layout>

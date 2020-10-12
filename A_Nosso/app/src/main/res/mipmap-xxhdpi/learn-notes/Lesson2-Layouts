@@ -1,0 +1,217 @@
+8.Styling a TextView
+--------------------
+<TextView 
+	style="@style/NameStyle"/>
+
+- styles.xml
+<style name="NameStyle">
+    <item name="android:layout_marginTop">@dimen/layout_margin</item>
+    <item name="android:fontFamily">@font/roboto</item>
+    <item name="android:paddingTop">@dimen/small_padding</item>
+    <item name="android:textColor">@android:color/black</item>
+    <item name="android:textSize">@dimen/text_size</item>
+</style>
+
+- dimens.xml
+	<dimen name="text_size">20sp</dimen>
+    <dimen name="small_padding">8dp</dimen>
+    <dimen name="layout_margin">16dp</dimen>
+
+
+10.Exercise: Add a ScrollView
+-----------------------------
+<ScrollView
+	android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" > 
+
+-- More than one 'View'    
+    <LinearLayout/>
+
+-- One 'View'
+	<TextView/>
+</ScrollView>
+
+<TextView
+	android:lineSpacingMultiplier="1.2" => Add spacing between the lines
+	/>
+- 'Code'->'Reformat Code'
+
+
+12.ADDING A DONE BUTTON TO ACCEPT TEXT INPUT
+--------------------------------------------
+- <EditText
+	android:inputType="{There Are Various Types}"
+	/>
+
+
+13.Exercise: Add EditText, Done Button, ClickHandler
+----------------------------------------------------
+[MainActivity.kt]
+
+- Set the 'clickListener' at 'onCreate()'
+override fun onCreate() {
+	super.onCreate()	
+	findViewById<Button>(R.id.done_button).setOnClickListener {
+		addNickname(it) // 'it', refers to 'done_button'
+	}
+}
+
+private fun addNickname(view: View) {
+	val editText = findViewById<EditText>(R.id.nickname_edit)
+	val nicknameTextView = findViewById<TextView>(R.id.nickname_text)
+
+	nicknameTextView.text = editText.text
+	editText.visibility = View.Gone
+	view.visibility = View.Gone
+	nicknameTextView.visibility = view.visible
+
+-- Hide the keyboard after its use
+	val = imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+	imm.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+
+14.DATA BINDING TECHNIQUE
+------------------------
+- 'Data Binding': Allows to connect a 'Layout' to an 'Activity/Fragment']
+-- The binding object is like a glue between a layout and its views/data. 
+--- Discarding numerous: 'findViewById()'
+---- Use <layout> when using 'Data Binding' <data> 
+
+
+15.DATA BINDING: VIEWS
+----------------------
+- Enable 'Data Binding' at 'build.gradle(Module:app)'
+
+	dataBinding {
+		enabled = true
+	}
+
+[activity_main.xml]
+- Wrap all of the code with <layout></layout>, so that the 'Root class' is no longer a 'View Group'
+
+-'Cut/paste' the namespace declarations from <LinearLayout> into <layout>
+
+[MainActivity.kt] 
+*import androidx.databinding.DataBindingUtil
+*import com.example.android.aboutme.databinding.ActivityMainBinding
+
+- create a variable above 'onCreate' for the 'binding' object, which gets instantiated at 'onCreate'
+**ex: private lateinit var binding: ActivityMainBinding
+-- The type of binding: 'ActivityMainBinding' Class, is created by a compiler SPECIFICALLY for this MainActivity, 
+the name is derived from the name of the layout file [activity_main.xml] => ActivityMainBinding
+--- REPLACE 'setContentView' with an instruction to create the binding object that connects the layout with the activity. 
+
+***class MainActivity : AppCompatActivity() {
+	
+	private lateinit var binding: ActivityMainBinding 
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		// setContentView(R.layout.activity_main)
+		binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+		// findViewById<Button>(R.id.done_btn).setOnClickListener {
+		//	addNickcName(it)
+		//  }
+
+		binding.doneButton.setOnClickListener {
+			addNickName(it)
+		}
+	}
+
+	private fun addNickname(view: View) {
+
+	- binding.apply => makes the code easier to read (REMOVES all the 'binding')
+	-- To refresh the UI with new data, must 'invalidate' all binding expressions to be recreated with correct data
+
+	// val editText = findViewById<EditText>(R.id.nickname_edit)
+	// val nicknameTextView = findViewById<TextView>(R.id.nickname_text)
+
+	binding.apply {
+		[binding].nicknameText.text = binding.nicknameEdit.text
+		invalidateAll()
+		[binding].nicknameEdit.visibility = View.GONE
+		[binding].doneButton.visibility = View.GONE
+		[binding].nicknameText.visibility = View.VISIBLE
+		}
+	}
+}
+
+
+16.DATA BINDING: DATA
+---------------------
+- Power of data binding: Bind a view to a 'Data Class' [Data directly available to the view]
+-- Create a class for 'Name' and 'NickName' data
+--- Instead of storing as 'String' resources, make into proper data, then bind them to the views
+
+- Create data class for the names, create a new 'MyName.kt' file
+-- ex: data class MyName(var name: String = "",	var nickname: String = "")
+
+[activity_main.xml] 
+- the name is a 'String', replace with the reference in the data class
+-- Let the <layout> know about the data, create a 'data block'
+--- then add a 'variable block' for the variable
+	
+ex:<layout>
+	  <data> 
+		<variable
+			name="myName"
+			type="com.example.android.aboutme.MyName" />
+	  </data> 
+
+	<TextView
+		android:text="@={myName.name}" // data class MyName(var name: String ="")
+		android:text="@={myName.nickname}"
+	/>
+
+- Above 'onCreate', make an instance of the 'Data Class' and set the name. 
+-- Then 'onCreate', set the value of the 'MyName' variable, declared/used on the layout file
+--- insert 'nickname' as well
+
+[MainActivity.kt]
+class MainActivity : AppCompatActivity() {
+	
+	private lateinit var binding: ActivityMainBinding
+	
+	private val myName: MyName = MyName("Alex Kim")
+
+	override fun onCreate(){
+		
+		binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+
+		binding.myName(inTheLayout) = myName(itsActualValue)
+
+	}
+}
+
+private fun addNickname() {
+  binding.apply {
+	myName?.nickname = nicknameEdit.text.toString()
+  }
+}
+
+
+17.Exercise: Implement Data Binding 
+-----------------------------------
+Data Binding Views and Data
+
+- Keeping the data in the view violates separation of data and presentation
+- Keep data in a data class; add <data> block to the <layout> to identify the data as variables to use with the views. 
+
+
+
+18.CONSTRAINT LAYOUT: ColorMyViews App 
+--------------------------------------
+https://developer.android.com/reference/android/support/constraint/ConstraintLayout
+
+- https://developer.android.com/training/constraint-layout
+-- If a view has no constraints when running the layout on a device, it goes to 'top-left corner'
+
+
+
+
+
+
+

@@ -1,0 +1,192 @@
+4.Designing Entities
+--------------------
+- To work with 'Room Database', need types of annotated
+classes
+-- Data Classes: To define the 'tables'
+--- Annotate a whole class with 'Entity'
+
+ex: @Entity(tableName = "daily_sleep_table")
+	data class SleepNight(...)
+
+		@PrimaryKey(autoGenerate = true)
+		var nightId: Long = 0L,
+
+		@ColumnInfo(name = "start_time_milli")
+		val startTimeMilli: Long = System.currentTime
+
+// Entity and Class name usually the same
+
+ID: To autogenerate, needs to be 'Long'
+
+----------------------------------------
+5.Exercise: Creating the SleepNight Entity
+----------------------------------------
+
+To make a 'Class' so that 'Room' can use it as a 'Table', 
+must use the '@Entity Annotation' 
+ex: @Entity(tableName = "daily_sleep_table")
+- Identify the name of the table with the word 'table'
+
+--------------------------
+6.Data Access Object (DAO)
+--------------------------
+By using the 'Room Database', you query the databse by 
+defining and call Kotlin functions in the code that 
+maps to SQL Queries. The mappings are defined in a 'DAO'
+using annotation and 'Room' creates all the necessary code. 
+DAO is like defining a custom interface for accessing your databse.
+
+- For common database operations, the 'Room' library provides convenience annotations such as:
+@Insert / @Delete / @Update / @Query
+ex: 
+// Tells its role is to define how to access data in
+// a 'Room Database'
+@Dao
+interface SleepDatabaseDao {
+	@Insert
+	//Msg to insert one item 
+	fun insert(night: SleepNight)
+
+	@Query("SELECT * FROM daily_table " +
+		   "ORDER BY nightId DESC")
+	fun getAllNights(): LiveData<List<SleepNight>>
+}
+
+
+----------------------------------
+7.Exercise: DAO - SleepDatabaseDao
+----------------------------------
+@Dao
+interface SleepDatabaseDao {
+	@Insert
+	fun insert(night: SleepNight)
+	@Update
+	fun update(night: SleepNight)
+
+	@Query("SELECT * FROM daily_table WHERE
+	nightId = :key")
+	fun get(key: Long): SleepNight
+	// the colon parameter name on the other side of
+!!!	the equal sign is how we reference a parameter from 
+	from the function
+
+	@Delete
+	fun delete(night: SleepNight)
+	// Allows to delete a specific entity 
+	fun deleteAllNights(nights: List<SleepNight>):Int
+	// Returns the number of rows deleted 
+
+	@Query("DELETE FROM daily_sleep_table")
+	fun clear()
+	// deletes everything from the table 
+
+	@Query("SELECT * FROM daily_sleep_table
+	ORDER BY nightId DESC")
+	fun getAllNights(): LiveData<List<SleepNight>>
+	// Return all the rows in a table to display a full set of data. Must return a list of sorted entities. 
+
+	@Query("SELECT * FROM daily_sleep_table ORDER BY
+	nightId DESC LIMIT 1")
+	fun getTonight(): SleepNight? 
+	// returns the most recent night by calling the 
+	// latest night, limited by one 
+	// The return type, SleepNight is nullable 
+}
+
+--------------------------
+8.Creating a Room Database <NOOTTT NEECCESSAARRYY>
+--------------------------
+- General process of getting a Room database
+-- Create a public abstract class that extends Room db
+
+------------------------------------
+9.Exercise: Creating a Room Database <NOOTTT NEECCESSAARRYY>
+------------------------------------
+- Create a 'SleepDatabase file'
+ex: 
+
+// Have to declare the entities and version of the db
+// 'SleepNight' is the only 'table', having more tables,
+// add them all to this list 
+// Then, tell about the 'DAO' associated with the entity
+// to interact with the database
+// Do this by declaring an abstract value of the type
+// of DAO, SleepDataBaseDao
+
+@Database(entities = [SleepNight::class], version = 1,
+exportSchema = false)
+abstract class SleepDatabase : RoomDatabase() {
+	
+	abstract val sleepDatabaseDao: SleepDatabaseDao	
+	
+	// Allows clients to access the methods for creating
+	// or getting the database wout instantiating the 
+	// class
+	// Since the only purpose of this is class is to 
+	// provide us with a database, there is no reason 
+	// instantiate it
+	
+	companion object{
+		 
+		// Declare a private nullable variable for the
+		// database and initialize it to null  
+		
+		// INSTANCE keeps a reference to the database
+		// Helps avoid repeatedly open connections to 
+		// the database  
+
+ 		// Volatile annotation: Makes sure the value 
+ 		// of INSTANCE is always up to date and all
+ 		// the same to all execution threats 			
+
+		@Volatile
+		private var INSTANCE: SleepDatabse? = null
+
+		fun getInstance(conext: Context): SleepDatabase {
+
+		}
+	} 
+}
+
+------------------------------- 
+13.Exercise: Adding A ViewModel
+-------------------------------
+COMPLEX
+
+
+
+private var _showSnackbarEvent = MutableLiveData<Boolean>()
+val showSnackBarEvent: LiveData<Boolean>
+	get() = _showSnackbarEvent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="action_loginFragment_to_pedidosFragment" type="id" />
+    <item name="action_cadastroFragment_to_loginFragment" type="id" />
+    <item name="action_pinicialFragment_to_frutasFragment" type="id" />
+</resources>
